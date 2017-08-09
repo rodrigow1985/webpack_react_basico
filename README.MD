@@ -1,12 +1,12 @@
-#Paso a paso para crear un proyecto con Webpack y React básico
-##Links interesantes sobre este tema:
+# Paso a paso para crear un proyecto con Webpack y React básico
+## Links interesantes sobre este tema:
 - Video que explica paso a paso como configurar webpack. Además tiene un ejemplo de una aplicación con React [link](https://www.youtube.com/watch?v=wv7hXgNC2AQ)
-##1. Crear un directorio para el proyecto
-##2. Ejecutar: ````npm init````
-##3. Ejecutar: ````npm install babel-core babel-loader babel-preset-react babel-preset-es2015 webpack-dev-server html-webpack-plugin````
-##4. Ejecutar: ````npm install react react-dom lodash -S````
-##5. Ejecutar: ````npm i webpack --save-dev````
-##6. Crear el archivo webpack.config.js:
+## 1. Crear un directorio para el proyecto
+## 2. Ejecutar: ````npm init````
+## 3. Ejecutar: ````npm install babel-core babel-loader babel-preset-react babel-preset-es2015 webpack-dev-server html-webpack-plugin````
+## 4. Ejecutar: ````npm install react react-dom lodash -S````
+## 5. Ejecutar: ````npm i webpack --save-dev````
+## 6. Crear el archivo webpack.config.js:
 ````
 
 var path = require("path");
@@ -57,13 +57,13 @@ var config = {
 
 module.exports = config;
 ````
-##7. Crear el archivo .babelrc en la ruta básica del proyecto:
+## 7. Crear el archivo .babelrc en la ruta básica del proyecto:
 ````
 {
   "presets": ["es2015", "react"]
 }
 ````
-##8. Crear la siguiente estructura:
+## 8. Crear la siguiente estructura:
 ```
 src
 -index.jsx
@@ -76,7 +76,7 @@ src
 -img
 -js
 ```
-##9. Archivo src/index.html:
+## 9. Archivo src/index.html:
 ```
 <!doctype html>
 <html lang="en">
@@ -93,7 +93,7 @@ src
 </body>
 </html>
 ```
-##10. Archivo src/index.jsx:
+## 10. Archivo src/index.jsx:
 ```
 import React from "react";
 import { render } from "react-dom";
@@ -110,7 +110,7 @@ render(
 	document.getElementById('app')
 );
 ```
-##11. Archivo src/components/layout/App/index.jsx:
+## 11. Archivo src/components/layout/App/index.jsx:
 ```
 // Dependencias
 import React, { Component } from 'react';
