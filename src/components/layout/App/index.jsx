@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 
 // Components
 
-
 // Data
 
+// Assets
+require("../../../css/layout/stylesheet.css");
 
 class App extends Component {
 	constructor(props){

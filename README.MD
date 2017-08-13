@@ -1,141 +1,110 @@
-# Paso a paso para crear un proyecto con Webpack y React básico
+# Paso a paso para agregar CSS al proyecto báse de Webpack + React
 ### Links interesantes sobre este tema:
-- Video que explica paso a paso como configurar webpack. Además tiene un ejemplo de una aplicación con React [link](https://www.youtube.com/watch?v=wv7hXgNC2AQ)
-### 1. Crear un directorio para el proyecto
-### 2. Ejecutar:
-````npm init````
-### 3. Ejecutar:
-````npm install babel-core babel-loader babel-preset-react babel-preset-es2015 webpack-dev-server html-webpack-plugin````
-### 4. Ejecutar:
-````npm install react react-dom lodash -S````
-### 5. Ejecutar:
-````npm i webpack --save-dev````
-### 6. Crear el archivo webpack.config.js:
+- Página en la cual me basé para hacer el proyecto [link](https://webpack.github.io/docs/stylesheets.html)
+### 1. Instalar los Loader css y style. Estos loaders lo que hacen es juntar todos los .css de requeridos (mediante "require") en cada .jsx y los pone en el .bundel.
+Ejecutar:
+````
+npm install style-loader css-loader --save-dev
+````
+### 2. Configurar archivo webpack.config.js:
+````
+{
+    // ...
+    module: {
+        loaders: [
+            { test: /\.css$/, loader: "style-loader!css-loader" }
+        ]
+    }
+}
 ````
 
+### 3. Crear directorio y archivo .css:
+````
+src
+-css
+--layout
+---stylesheet.css
+````
+
+### 4. Instalar el plugin "extract-text-webpack-plugin". Este plugin lo que hace es sacar del .bundle todo lo que sea proveniente de un .css y lo coloca en un archivo único .css. Luego podemos linkearlo (link) en el index.html:
+Ejecutar:
+````
+npm install extract-text-webpack-plugin --save-dev
+````
+
+### 5. Configurar archivo webpack.config.js:
+````
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
 
 var DIST_DIR = path.resolve(__dirname, "dist");
 var SRC_DIR = path.resolve(__dirname, "src");
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: SRC_DIR +'/index.html',
-  filename: 'index.html',
-  inject: 'body'
-})
-
-var config = {
-    entry: SRC_DIR + "/index.jsx",
-    output: {
-        path: DIST_DIR + "/app",
-        filename: "bundle.js",
-        //publicPath: "/app/"
-    },
-    module: {
-        loaders: [
-            {
-                test: /.jsx$/,
-                include: SRC_DIR,
-                loader: "babel-loader",
-                query: {
-                    presets: ["react", "es2015", "stage-2"]
-                }
-            }
-        ]
-    },
-
-	devServer: {
-      proxy: {
-        "/api": "desa.midulcedanna.com.ar:8081"
+module.exports = {
+  entry: SRC_DIR + "/index.jsx",
+  output: {
+      path: DIST_DIR,
+      filename: 'bundle.js'
+  },
+  module: {
+      loaders: [
+          {
+              test: /.jsx$/,
+              include: SRC_DIR,
+              exclude: /node_modules/,
+              loader: "babel-loader",
+              query: {
+                  presets: ["react", "es2015", "stage-2"]
+              }
+          },
+          {
+            test: /\.css$/,
+            loader: "style-loader!css-loader"
+          }
+    ],
+    rules: [
+      {
+        test: /.jsx$/,
+        use: "babel-loader"
       },
-	    host: "0.0.0.0",
-	    port: "8081",
-	    //public: "desa.midulcedanna.com.ar",
-	    inline: true,
-      	disableHostCheck: true
-	  },
-    plugins: [HtmlWebpackPluginConfig],
-    devtool: 'source-map'
-};
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
+      }
+    ]
+  },
 
-module.exports = config;
-````
-### 7. Crear el archivo .babelrc en la ruta básica del proyecto:
-````
-{
-  "presets": ["es2015", "react"]
+devServer: {
+    proxy: {
+      "/api": "desa.midulcedanna.com.ar:8081"
+    },
+    host: "0.0.0.0",
+    port: "8081",
+    //public: "desa.midulcedanna.com.ar",
+    inline: true,
+    disableHostCheck: true,
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    stats: "errors-only",
+    open: true
+  },
+  plugins: [
+      new HtmlWebpackPlugin({
+          title: 'Project Demo',
+          hash: true,
+          chunksSortMode: 'dependency',
+          template: './src/index.html', // Load a custom template (ejs by default see the FAQ for details)
+      }),
+      new ExtractTextPlugin({
+          filename: 'app.css',
+          disable: false,
+          allChunks: true
+      })
+  ],
+  devtool: 'source-map'
 }
 ````
-### 8. Crear la siguiente estructura:
-```
-src
--index.jsx
--index.html
--components
---layout
----App
-----index.jsx
--css
--img
--js
-```
-### 9. Archivo src/index.html:
-```
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ReactJS Basics</title>
-
-</head>
-<body>
-  <div id="app"></div>
-</body>
-</html>
-```
-### 10. Archivo src/index.jsx:
-```
-import React from "react";
-import { render } from "react-dom";
-
-// Components
-import App from './components/layout/App/index.jsx';
-
-// Routes
-
-// Assets
-
-render(
-	<App />,
-	document.getElementById('app')
-);
-```
-### 11. Archivo src/components/layout/App/index.jsx:
-```
-// Dependencias
-import React, { Component } from 'react';
-
-// Components
-
-// Data
-
-class App extends Component {
-	constructor(props){
-			super(props)
-		}
-
-	render() {
-    	return(
-            <div>
-              	<h1>Webpack + React Básico</h1>
-						</div>
-        );
-    }
-}
-
-export default App;
-```
