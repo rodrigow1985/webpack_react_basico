@@ -1,18 +1,13 @@
 # Paso a paso para crear un proyecto con Webpack y React básico
-### Links interesantes sobre este tema:
+## Links interesantes sobre este tema:
 - Video que explica paso a paso como configurar webpack. Además tiene un ejemplo de una aplicación con React [link](https://www.youtube.com/watch?v=wv7hXgNC2AQ)
-### 1. Crear un directorio para el proyecto
-### 2. Ejecutar:
-````npm init````
-### 3. Ejecutar:
-````npm install babel-core babel-loader babel-preset-react babel-preset-es2015 webpack-dev-server html-webpack-plugin````
-### 4. Ejecutar:
-````npm install react react-dom lodash -S````
-### 5. Ejecutar:
-````npm i webpack --save-dev````
-### 6. Crear el archivo webpack.config.js:
+## 1. Crear un directorio para el proyecto
+## 2. Ejecutar: ````npm init````
+## 3. Ejecutar: ````npm install babel-core babel-loader babel-preset-react babel-preset-es2015 webpack-dev-server html-webpack-plugin````
+## 4. Ejecutar: ````npm install react react-dom lodash -S````
+## 5. Ejecutar: ````npm i webpack --save-dev````
+## 6. Crear el archivo webpack.config.js:
 ````
-
 var path = require("path");
 
 var DIST_DIR = path.resolve(__dirname, "dist");
