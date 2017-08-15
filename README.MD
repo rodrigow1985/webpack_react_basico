@@ -1,6 +1,6 @@
-# Paso a paso para crear un proyecto con Webpack y React básico
+# Paso a paso para crear un proyecto con React y Bootstrap
 ## Links interesantes sobre este tema:
-- Video que explica paso a paso como configurar webpack. Además tiene un ejemplo de una aplicación con React [link](https://www.youtube.com/watch?v=wv7hXgNC2AQ)
+- Video de donde saque la info para configurar bootstrap con React [link](https://www.youtube.com/watch?v=X3BAQQpKOp0)
 ## 1. Agregar al archivo index.html los siguientes links (Respetar orden y lugar dentro de larchivo):
 ### bootstrap css (head)
 ````
